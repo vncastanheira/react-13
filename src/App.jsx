@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { ReactComponent as LogoSvg } from "./assets/img/logo.svg";
+import Contacts from './components/Contacts'
 
 import './App.scss';
 
 class App extends React.Component {
+
   render() {
     return (
       <React.Fragment>
@@ -59,6 +61,7 @@ class App extends React.Component {
               <span className="contact__data">Empresa</span>
               <span className="contact__data">Departamento</span>
             </article>
+            <Contacts/>
           </section>
         </div>
       </React.Fragment>
