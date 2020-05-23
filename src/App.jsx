@@ -5,9 +5,11 @@ import Contacts from './components/Contacts'
 
 import './App.scss';
 
-class App extends React.Component {
 
+class App extends React.Component {
   render() {
+    const ref = React.createRef()
+
     return (
       <React.Fragment>
         <header className="topbar">
@@ -24,11 +26,11 @@ class App extends React.Component {
               <input type="text" className="filters__search__input" placeholder="Pesquisar" />
 
               <button className="filters__search__icon">
-                <i className="fa fa-search"/>
+                <i className="fa fa-search" />
               </button>
             </div>
 
-            <button className="filters__item is-selected">
+            <button className="filters__item is-selected" ref={ref}>
               Nome <i className="fas fa-sort-down" />
             </button>
 
@@ -61,7 +63,7 @@ class App extends React.Component {
               <span className="contact__data">Empresa</span>
               <span className="contact__data">Departamento</span>
             </article>
-            <Contacts/>
+            <Contacts sortByNameBtn={ref} />
           </section>
         </div>
       </React.Fragment>
