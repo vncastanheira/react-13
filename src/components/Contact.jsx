@@ -3,13 +3,15 @@ import React from 'react';
 function Contact(props) {
   return (
     <article className="contact">
-      <span className="contact__avatar" />
-      <span className="contact__data">Nome</span>
-      <span className="contact__data">Telefone</span>
-      <span className="contact__data">País</span>
-      <span className="contact__data">Admissão</span>
-      <span className="contact__data">Empresa</span>
-      <span className="contact__data">Departamento</span>
+      <span className="contact__avatar">
+        <img src={props.contact.avatar} alt={props.contact.name} />
+      </span>
+      <span className="contact__data">{props.contact.name}</span>
+      <span className="contact__data">{props.contact.phone}</span>
+      <span className="contact__data">{props.contact.country}</span>
+      <span className="contact__data">{props.contact.admissionDate}</span>
+      <span className="contact__data">{props.contact.company}</span>
+      <span className="contact__data">{props.contact.department}</span>
     </article>
   )
 }
