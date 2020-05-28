@@ -7,8 +7,25 @@ import './App.scss';
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.filterButtonClick = this.filterButtonClick.bind(this)
+    this.state = {
+      activeFilter: 'name'
+    }
+  }
+
+  filterButtonClick(filter) {
+    this.setState({activeFilter: filter})
+    console.log(`Filter set to ${filter}`)
+  }
+
   render() {
-    const ref = React.createRef()
+    const nameRef = React.createRef()
+    const countryRef = React.createRef()
+    const companyRef = React.createRef()
+    const departmentRef = React.createRef()
+    const admissionRef = React.createRef()
 
     return (
       <React.Fragment>
@@ -30,24 +47,24 @@ class App extends React.Component {
               </button>
             </div>
 
-            <button className="filters__item is-selected" ref={ref}>
+            <button className={this.state.activeFilter === 'name' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('name')}}>
               Nome <i className="fas fa-sort-down" />
             </button>
 
-            <button className="filters__item">
+            <button className={this.state.activeFilter === 'country' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('country')}}>
               País <i className="fas fa-sort-down" />
             </button>
 
-            <button className="filters__item">
-              Empresa <i className="fas fa-sort-down" />
+            <button className={this.state.activeFilter === 'company' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('company')}}>
+              Empresa <i className="fas fa-sort-down" ref={companyRef} />
             </button>
 
-            <button className="filters__item">
-              Departamento <i className="fas fa-sort-down" />
+            <button className={this.state.activeFilter === 'department' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('department')}}>
+              Departamento <i className="fas fa-sort-down" ref={departmentRef} />
             </button>
 
-            <button className="filters__item">
-              Data de admissão <i className="fas fa-sort-down" />
+            <button className={this.state.activeFilter === 'admissionDate' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('admissionDate')}}>
+              Data de admissão <i className="fas fa-sort-down" ref={admissionRef} />
             </button>
           </section>
         </div>
@@ -63,7 +80,10 @@ class App extends React.Component {
               <span className="contact__data">Empresa</span>
               <span className="contact__data">Departamento</span>
             </article>
-            <Contacts sortByNameBtn={ref} />
+            <Contacts
+              sortByNameBtn={nameRef}
+              sortByCountryBtn={countryRef}
+            />
           </section>
         </div>
       </React.Fragment>
