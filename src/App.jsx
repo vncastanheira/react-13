@@ -11,22 +11,38 @@ class App extends React.Component {
     super(props)
     this.filterButtonClick = this.filterButtonClick.bind(this)
     this.state = {
+      contacts: [],
       activeFilter: 'name'
     }
   }
 
+  async componentDidMount() {
+    await fetch('https://5e82ac6c78337f00160ae496.mockapi.io/api/v1/contacts')
+      .then(async (response) => {
+        await response.json().then(data => this.setState({contacts: data}))
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
   filterButtonClick(filter) {
-    this.setState({activeFilter: filter})
+    this.setState({ activeFilter: filter })
+    this.sortBy(filter)
     console.log(`Filter set to ${filter}`)
   }
 
-  render() {
-    const nameRef = React.createRef()
-    const countryRef = React.createRef()
-    const companyRef = React.createRef()
-    const departmentRef = React.createRef()
-    const admissionRef = React.createRef()
+  sortBy(property) {
+    let sorted = [...this.state.contacts]
+    sorted.sort((a, b) => {
+      if (a[property] > b[property]) return 1
+      else if (a[property] < b[property]) return -1
+      else return 0
+    })
+    this.setState({contacts: sorted})
+  }
 
+  render() {
     return (
       <React.Fragment>
         <header className="topbar">
@@ -47,24 +63,24 @@ class App extends React.Component {
               </button>
             </div>
 
-            <button className={this.state.activeFilter === 'name' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('name')}}>
+            <button className={this.state.activeFilter === 'name' ? "filters__item is-selected" : "filters__item"} onClick={() => { this.filterButtonClick('name') }}>
               Nome <i className="fas fa-sort-down" />
             </button>
 
-            <button className={this.state.activeFilter === 'country' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('country')}}>
+            <button className={this.state.activeFilter === 'country' ? "filters__item is-selected" : "filters__item"} onClick={() => { this.filterButtonClick('country') }}>
               País <i className="fas fa-sort-down" />
             </button>
 
-            <button className={this.state.activeFilter === 'company' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('company')}}>
-              Empresa <i className="fas fa-sort-down" ref={companyRef} />
+            <button className={this.state.activeFilter === 'company' ? "filters__item is-selected" : "filters__item"} onClick={() => { this.filterButtonClick('company') }}>
+              Empresa <i className="fas fa-sort-down" />
             </button>
 
-            <button className={this.state.activeFilter === 'department' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('department')}}>
-              Departamento <i className="fas fa-sort-down" ref={departmentRef} />
+            <button className={this.state.activeFilter === 'department' ? "filters__item is-selected" : "filters__item"} onClick={() => { this.filterButtonClick('department') }}>
+              Departamento <i className="fas fa-sort-down" />
             </button>
 
-            <button className={this.state.activeFilter === 'admissionDate' ? "filters__item is-selected" : "filters__item"} onClick={() => {this.filterButtonClick('admissionDate')}}>
-              Data de admissão <i className="fas fa-sort-down" ref={admissionRef} />
+            <button className={this.state.activeFilter === 'admissionDate' ? "filters__item is-selected" : "filters__item"} onClick={() => { this.filterButtonClick('admissionDate') }}>
+              Data de admissão <i className="fas fa-sort-down" />
             </button>
           </section>
         </div>
@@ -80,10 +96,7 @@ class App extends React.Component {
               <span className="contact__data">Empresa</span>
               <span className="contact__data">Departamento</span>
             </article>
-            <Contacts
-              sortByNameBtn={nameRef}
-              sortByCountryBtn={countryRef}
-            />
+            <Contacts contacts={this.state.contacts} />
           </section>
         </div>
       </React.Fragment>
