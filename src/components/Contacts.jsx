@@ -27,8 +27,8 @@ function Contacts(props) {
 
 	return (
 		<>
-			{props.contacts.length > 0
-				? props.contacts.filter(filterContact).map(c =>
+			{props.data.length > 0
+				? props.data.filter(filterContact).map(c =>
 					<Contact
 						key={c.id}
 						avatar={c.avatar}
