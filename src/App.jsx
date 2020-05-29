@@ -61,18 +61,7 @@ class App extends React.Component {
         </div>
 
         <div className="container">
-          <section className="contacts">
-            <article className="contact">
-              <span className="contact__avatar" />
-              <span className="contact__data">Nome</span>
-              <span className="contact__data">Telefone</span>
-              <span className="contact__data">País</span>
-              <span className="contact__data">Admissão</span>
-              <span className="contact__data">Empresa</span>
-              <span className="contact__data">Departamento</span>
-            </article>
-            <Contacts data={this.state.contacts} searchTerm={this.state.searchTerm} />
-          </section>
+          <Contacts data={this.state.contacts} searchTerm={this.state.searchTerm} />
         </div>
       </React.Fragment>
     )

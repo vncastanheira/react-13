@@ -5,20 +5,20 @@ var dayjs = require('dayjs')
 function Contacts(props) {
 	function filterContact(contact) {
 		let terms = props.searchTerm.toUpperCase().split(' ')
-		if(terms.length == 1 && terms[0] === '')
+		if (terms.length == 1 && terms[0] === '')
 			return true
 
 		for (let index = 0; index < terms.length; index++) {
 			const term = terms[index];
-			if(term === '')
+			if (term === '')
 				continue
 
-			if(contact.name.toUpperCase().includes(term)
-			|| contact.phone.toUpperCase().includes(term)
-			|| contact.country.toUpperCase().includes(term)
-			|| dayjs(contact.admissionDate).format("DD/MM/YYYY").includes(term)
-			|| contact.company.toUpperCase().includes(term)
-			|| contact.department.toUpperCase().includes(term))
+			if (contact.name.toUpperCase().includes(term)
+				|| contact.phone.toUpperCase().includes(term)
+				|| contact.country.toUpperCase().includes(term)
+				|| dayjs(contact.admissionDate).format("DD/MM/YYYY").includes(term)
+				|| contact.company.toUpperCase().includes(term)
+				|| contact.department.toUpperCase().includes(term))
 				return true
 		}
 
@@ -26,7 +26,16 @@ function Contacts(props) {
 	}
 
 	return (
-		<>
+		<section className="contacts">
+			<article className="contact">
+				<span className="contact__avatar" />
+				<span className="contact__data">Nome</span>
+				<span className="contact__data">Telefone</span>
+				<span className="contact__data">País</span>
+				<span className="contact__data">Admissão</span>
+				<span className="contact__data">Empresa</span>
+				<span className="contact__data">Departamento</span>
+			</article>
 			{props.data.length > 0
 				? props.data.filter(filterContact).map(c =>
 					<Contact
@@ -40,7 +49,7 @@ function Contacts(props) {
 						department={c.department}
 					/>)
 				: <p>Carregando...</p>}
-		</>
+		</section>
 	)
 }
 
