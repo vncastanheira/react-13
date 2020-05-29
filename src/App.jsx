@@ -60,9 +60,7 @@ class App extends React.Component {
             setSearchTerm={this.setSearchTerm} />
         </div>
 
-        <div className="container">
-          <Contacts data={this.state.contacts} searchTerm={this.state.searchTerm} />
-        </div>
+        <Contacts data={this.state.contacts} searchTerm={this.state.searchTerm} />
       </React.Fragment>
     )
   }

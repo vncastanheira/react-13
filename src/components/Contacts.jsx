@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Contact from './Contact'
 var dayjs = require('dayjs')
 
 function Contacts(props) {
 	function filterContact(contact) {
 		let terms = props.searchTerm.toUpperCase().split(' ')
-		if (terms.length == 1 && terms[0] === '')
+		if (terms.length === 1 && terms[0] === '')
 			return true
 
 		for (let index = 0; index < terms.length; index++) {
@@ -26,31 +26,25 @@ function Contacts(props) {
 	}
 
 	return (
-		<section className="contacts">
-			<article className="contact">
-				<span className="contact__avatar" />
-				<span className="contact__data">Nome</span>
-				<span className="contact__data">Telefone</span>
-				<span className="contact__data">País</span>
-				<span className="contact__data">Admissão</span>
-				<span className="contact__data">Empresa</span>
-				<span className="contact__data">Departamento</span>
-			</article>
-			{props.data.length > 0
-				? props.data.map(c =>
-					<Contact
-						key={c.id}
-						avatar={c.avatar}
-						name={c.name}
-						phone={c.phone}
-						country={c.country}
-						admissionDate={dayjs(c.admissionDate).format("DD/MM/YYYY")}
-						company={c.company}
-						department={c.department}
-						show={filterContact(c)}
-					/>)
-				: <p>Carregando...</p>}
-		</section>
+		<div className="container" data-testid="contacts">
+			<section className="contacts" >
+				<article className="contact">
+					<span className="contact__avatar" />
+					<span className="contact__data">Nome</span>
+					<span className="contact__data">Telefone</span>
+					<span className="contact__data">País</span>
+					<span className="contact__data">Admissão</span>
+					<span className="contact__data">Empresa</span>
+					<span className="contact__data">Departamento</span>
+				</article>
+				{props.data
+					? props.data.filter(filterContact).map(c =>
+						<Contact data={c}
+							show={filterContact(c)}
+						/>)
+					: <p>Carregando...</p>}
+			</section>
+		</div>
 	)
 }
 
