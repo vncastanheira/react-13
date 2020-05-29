@@ -12,14 +12,15 @@ class App extends React.Component {
     this.filterButtonClick = this.filterButtonClick.bind(this)
     this.state = {
       contacts: [],
-      activeFilter: 'name'
+      activeFilter: '',
+      searchTerm: ''
     }
   }
 
   async componentDidMount() {
     await fetch('https://5e82ac6c78337f00160ae496.mockapi.io/api/v1/contacts')
       .then(async (response) => {
-        await response.json().then(data => this.setState({contacts: data}))
+        await response.json().then(data => this.setState({ contacts: data }))
       })
       .catch(err => {
         console.error(err)
@@ -39,7 +40,7 @@ class App extends React.Component {
       else if (a[property] < b[property]) return -1
       else return 0
     })
-    this.setState({contacts: sorted})
+    this.setState({ contacts: sorted })
   }
 
   render() {
@@ -56,7 +57,9 @@ class App extends React.Component {
         <div className="container">
           <section className="filters">
             <div className="filters__search">
-              <input type="text" className="filters__search__input" placeholder="Pesquisar" />
+              <input type="text" className="filters__search__input" placeholder="Pesquisar"
+                value={this.state.searchTerm}
+                onChange={e => { this.setState({ searchTerm: e.target.value }) }} />
 
               <button className="filters__search__icon">
                 <i className="fa fa-search" />
@@ -96,7 +99,7 @@ class App extends React.Component {
               <span className="contact__data">Empresa</span>
               <span className="contact__data">Departamento</span>
             </article>
-            <Contacts contacts={this.state.contacts} />
+            <Contacts contacts={this.state.contacts} searchTerm={this.state.searchTerm} />
           </section>
         </div>
       </React.Fragment>

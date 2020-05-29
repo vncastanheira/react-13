@@ -3,48 +3,32 @@ import Contact from './Contact'
 var dayjs = require('dayjs')
 
 function Contacts(props) {
-	// const [contacts, setContacts] = useState([]);
-	// const [sortNameDirection, setSortNameDirection] = useState(1)
-	// const [sortCountryDirection, setSortCountryDirection] = useState(1)
+	function filterContact(contact) {
+		let terms = props.searchTerm.toUpperCase().split(' ')
+		if(terms.length == 1 && terms[0] === '')
+			return true
 
-	// hook buttons
-	// useEffect(() => {
-	// 	props.sortByNameBtn.current.onclick = sortByName
-	// 	props.sortByCountryBtn.current.onclick = sortByCountry
-	// }, [contacts])
+		for (let index = 0; index < terms.length; index++) {
+			const term = terms[index];
+			if(term === '')
+				continue
 
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		await fetch('https://5e82ac6c78337f00160ae496.mockapi.io/api/v1/contacts')
-	// 			.then(async (response) => {
-	// 				await response.json().then(data => setContacts(data))
-	// 			})
-	// 			.catch(err => {
-	// 				console.error(err)
-	// 			})
-	// 	}
+			if(contact.name.toUpperCase().includes(term)
+			|| contact.phone.toUpperCase().includes(term)
+			|| contact.country.toUpperCase().includes(term)
+			|| dayjs(contact.admissionDate).format("DD/MM/YYYY").includes(term)
+			|| contact.company.toUpperCase().includes(term)
+			|| contact.department.toUpperCase().includes(term))
+				return true
+		}
 
-	// 	fetchData();
-	// }, []) // run only once
-
-	// function sortByName(e) {
-	// 	console.log('Sorting contacts by name...')
-	// 	e.preventDefault()
-	// 	let sorted = [... contacts]
-	// 	sorted.sort((a, b) => {
-	// 		if(a.name > b.name) return sortNameDirection
-	// 		else if (a.name < b.name) return -sortNameDirection
-	// 		else return 0
-	// 	})
-		
-	// 	setSortNameDirection(sortNameDirection * (-1))
-	// 	setContacts(sorted)
-	// }
+		return false
+	}
 
 	return (
 		<>
 			{props.contacts.length > 0
-				? props.contacts.map(c =>
+				? props.contacts.filter(filterContact).map(c =>
 					<Contact
 						key={c.id}
 						avatar={c.avatar}
