@@ -37,7 +37,7 @@ function Contacts(props) {
 				<span className="contact__data">Departamento</span>
 			</article>
 			{props.data.length > 0
-				? props.data.filter(filterContact).map(c =>
+				? props.data.map(c =>
 					<Contact
 						key={c.id}
 						avatar={c.avatar}
@@ -47,6 +47,7 @@ function Contacts(props) {
 						admissionDate={dayjs(c.admissionDate).format("DD/MM/YYYY")}
 						company={c.company}
 						department={c.department}
+						show={filterContact(c)}
 					/>)
 				: <p>Carregando...</p>}
 		</section>
